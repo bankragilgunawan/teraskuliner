@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teras Kuliner - Sensasi Kelezatan Bakso, Mie Ayam & Minuman Segar</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts: Plus Jakarta Sans & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            50: '#FFFCF8',
+                            100: '#FFF8F0',
+                            200: '#FDF2E3',
+                            300: '#FCE7D0',
+                        },
+                        terracotta: {
+                            50: '#FDF6F0',
+                            100: '#FBEBE0',
+                            500: '#E07A5F',
+                            600: '#C86249',
+                        },
+                        peach: {
+                            100: '#FFEEDD',
+                            400: '#F4A261',
+                            500: '#E76F51',
+                        },
+                        sage: {
+                            100: '#EBF2EE',
+                            500: '#81B29A',
+                            600: '#64977E',
+                        },
+                        warmdark: '#3D405B',
+                        softtext: '#52575D'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 30px -10px rgba(224, 122, 95, 0.12)',
+                        'card': '0 4px 20px -2px rgba(61, 64, 91, 0.06)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-nav {
+            background: rgba(255, 252, 248, 0.92);
+            backdrop-filter: blur(12px);
+        }
+        .hero-overlay {
+            background: linear-gradient(180deg, rgba(255, 252, 248, 0.82) 0%, rgba(253, 242, 227, 0.95) 100%);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #FFF8F0;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #E07A5F;
+            border-radius: 99px;
+        }
+    </style>
+</head>
+<body class="bg-cream-50 text-warmdark font-sans antialiased custom-scrollbar">
+
+    <!-- NAVBAR -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-nav border-b border-cream-200/80 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-terracotta-500 to-peach-400 flex items-center justify-center text-white font-bold text-xl shadow-soft group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-house-chimney-window text-lg"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-extrabold tracking-tight text-warmdark block font-serif">Teras <span class="text-terracotta-500 font-sans">Kuliner</span></span>
+                    <span class="text-[10px] text-softtext tracking-wider uppercase block -mt-1 font-semibold">Santai & Lezat Seperti di Rumah</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-warmdark">
+                <a href="#beranda" class="hover:text-terracotta-500 transition-colors">Beranda</a>
+                <a href="#tentang" class="hover:text-terracotta-500 transition-colors">Tentang Teras</a>
+                <a href="#menu" class="hover:text-terracotta-500 transition-colors">Menu Pilihan</a>
+                <a href="#fasilitas" class="hover:text-terracotta-500 transition-colors">Keunggulan</a>
+                <a href="#lokasi" class="hover:text-terracotta-500 transition-colors">Lokasi & Kontak</a>
+            </nav>
+
+            <!-- Actions & Order Trigger -->
+            <div class="hidden sm:flex items-center space-x-4">
+                <button onclick="toggleCartModal()" class="relative p-2.5 bg-cream-100 hover:bg-cream-200 text-warmdark rounded-2xl transition-all border border-cream-200">
+                    <i class="fa-solid fa-basket-shopping text-lg text-terracotta-500"></i>
+                    <span id="cart-count-badge" class="absolute -top-1.5 -right-1.5 bg-terracotta-500 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm hidden">0</span>
+                </button>
+                <a href="https://wa.me/6281234567890?text=Halo%20Teras%20Kuliner,%20saya%20ingin%20bertanya/memesan" target="_blank" class="bg-terracotta-500 hover:bg-terracotta-600 text-white font-bold px-5 py-2.5 rounded-2xl text-sm shadow-soft transition-all flex items-center space-x-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Pesan via WA</span>
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-warmdark hover:text-terracotta-500 text-2xl focus:outline-none">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cream-50 border-b border-cream-200 px-6 pt-3 pb-6 space-y-3">
+            <a href="#beranda" class="block py-2 text-warmdark hover:text-terracotta-500 font-semibold">Beranda</a>
+            <a href="#tentang" class="block py-2 text-warmdark hover:text-terracotta-500 font-semibold">Tentang Teras</a>
+            <a href="#menu" class="block py-2 text-warmdark hover:text-terracotta-500 font-semibold">Menu Pilihan</a>
+            <a href="#fasilitas" class="block py-2 text-warmdark hover:text-terracotta-500 font-semibold">Keunggulan</a>
+            <a href="#lokasi" class="block py-2 text-warmdark hover:text-terracotta-500 font-semibold">Lokasi & Jam Buka</a>
+            <div class="pt-2 flex flex-col gap-2">
+                <button onclick="toggleCartModal()" class="w-full bg-cream-200 text-terracotta-600 py-3 rounded-2xl font-bold flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span>Keranjang Pesanan (<span id="mobile-cart-count">0</span>)</span>
+                </button>
+                <a href="https://wa.me/6281234567890" target="_blank" class="w-full bg-terracotta-500 text-white text-center py-3 rounded-2xl font-bold flex items-center justify-center space-x-2 shadow-soft">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Hubungi via WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION WITH COZY HOME TERRACE BACKGROUND -->
+    <section id="beranda" class="relative pt-28 pb-20 lg:pt-36 lg:pb-28 overflow-hidden">
+        <!-- Home Terrace Background Image with Soft Gradient Overlay -->
+        <div class="absolute inset-0 -z-10">
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80" alt="Teras Rumah Restoran" class="w-full h-full object-cover">
+            <div class="absolute inset-0 hero-overlay"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    
+                    <div class="inline-flex items-center space-x-2 bg-cream-100/90 border border-terracotta-500/30 rounded-full px-4 py-2 text-xs sm:text-sm text-terracotta-600 font-bold shadow-sm backdrop-blur-md">
+                        <span class="bg-terracotta-500 text-white text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wide">Rumah & Santai</span>
+                        <span>Nikmati Kelezatan Berasa Makan di Teras Sendiri</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-warmdark tracking-tight leading-tight font-serif">
+                        Hangatnya Suasana, <br class="hidden sm:inline">
+                        <span class="text-terracotta-500 italic">Nikmatnya</span> Bakso & Es Segar Teras.
+                    </h1>
+
+                    <p class="text-softtext text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed font-medium">
+                        Selamat datang di <strong class="text-warmdark">Teras Kuliner</strong>! Tempat makan berkonsep teras rumah yang asri & sejuk. Menyajikan Bakso Kuah Gurih, Mie Ayam Lezat, Bakso Bakar Bumbu Khas, hingga ragam Es Segar pereda dahaga.
+                    </p>
+
+                    <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="#menu" class="w-full sm:w-auto bg-terracotta-500 hover:bg-terracotta-600 text-white font-bold px-8 py-4 rounded-2xl text-base shadow-soft transition-all text-center flex items-center justify-center space-x-2">
+                            <span>Lihat Daftar Menu</span>
+                            <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </a>
+                        <a href="https://wa.me/6281234567890?text=Halo%20Teras%20Kuliner,%20saya%20ingin%20memesan" target="_blank" class="w-full sm:w-auto bg-cream-100 hover:bg-cream-200 text-warmdark font-bold border border-cream-300 px-7 py-4 rounded-2xl text-base transition-all text-center flex items-center justify-center space-x-2">
+                            <i class="fa-brands fa-whatsapp text-emerald-600 text-lg"></i>
+                            <span>Pesan via WA</span>
+                        </a>
+                    </div>
+
+                    <!-- Quick Highlights Badges -->
+                    <div class="pt-6 border-t border-cream-300/60 grid grid-cols-3 gap-4 max-w-md mx-auto lg:mx-0 text-center lg:text-left">
+                        <div class="bg-cream-100/80 backdrop-blur-sm p-3 rounded-2xl border border-cream-200">
+                            <p class="text-xl font-extrabold text-terracotta-500">100%</p>
+                            <p class="text-xs text-softtext font-semibold">Halal & Segar</p>
+                        </div>
+                        <div class="bg-cream-100/80 backdrop-blur-sm p-3 rounded-2xl border border-cream-200">
+                            <p class="text-xl font-extrabold text-sage-600">Asri</p>
+                            <p class="text-xs text-softtext font-semibold">Suasana Teras</p>
+                        </div>
+                        <div class="bg-cream-100/80 backdrop-blur-sm p-3 rounded-2xl border border-cream-200">
+                            <p class="text-xl font-extrabold text-peach-500">Ramah</p>
+                            <p class="text-xs text-softtext font-semibold">Harga Hemat</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Hero Right Card Highlight -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white p-4 sm:p-5 rounded-3xl shadow-card border border-cream-200 relative">
+                        <div class="relative h-72 sm:h-80 rounded-2xl overflow-hidden mb-4">
+                            <img id="hero-feature-img" src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80" alt="Bakso Teras Kuliner" class="w-full h-full object-cover">
+                            <div class="absolute top-3 left-3 bg-terracotta-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                                Menu Andalan
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center px-2 mb-2">
+                            <h3 class="text-xl font-bold font-serif text-warmdark">Bakso Kuah Daging Spesial</h3>
+                            <span class="text-lg font-extrabold text-terracotta-500">Rp 18.000</span>
+                        </div>
+                        <p class="text-xs text-softtext px-2 leading-relaxed mb-4">Daging sapi segar racikan lembut dengan kuah kaldu hangat rempah pilihan. Cocok dinikmati di teras sambil santai.</p>
+                        <button onclick="addToCart(1)" class="w-full bg-cream-200 hover:bg-terracotta-500 hover:text-white text-terracotta-600 font-bold py-3 rounded-2xl transition duration-300 flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                            <span>Tambah ke Keranjang Pesanan</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT US / CONCEPT SECTION -->
+    <section id="tentang" class="py-20 bg-cream-100/80 border-y border-cream-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Image Grid -->
+                <div class="lg:col-span-6 grid grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" alt="Teras Santai" class="rounded-3xl shadow-card object-cover h-48 w-full border border-cream-200">
+                        <img src="https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=600&q=80" alt="Bakso Goreng" class="rounded-3xl shadow-card object-cover h-64 w-full border border-cream-200">
+                    </div>
+                    <div class="space-y-4 pt-8">
+                        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80" alt="Es Buah Segar" class="rounded-3xl shadow-card object-cover h-64 w-full border border-cream-200">
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80" alt="Suasana Restoran Teras" class="rounded-3xl shadow-card object-cover h-48 w-full border border-cream-200">
+                    </div>
+                </div>
+
+                <!-- Text Content -->
+                <div class="lg:col-span-6 space-y-6">
+                    <div>
+                        <span class="text-xs uppercase font-extrabold text-terracotta-500 tracking-widest block mb-2">Konsep Tempat Kami</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold font-serif text-warmdark leading-tight">Serasa Makan di Halaman & Teras Rumah Sendiri</h2>
+                    </div>
+
+                    <p class="text-softtext text-sm sm:text-base leading-relaxed">
+                        Di <strong>Teras Kuliner</strong>, kami menggabungkan kehangatan konsep rumah dengan hidangan favorit masyarakat Indonesia. Nikmati hembusan angin sejuk, tempat duduk yang nyaman, dan suasana kekeluargaan yang bikin betah berlama-lama.
+                    </p>
+
+                    <div class="grid sm:grid-cols-2 gap-4 pt-2">
+                        <div class="flex items-start space-x-3 bg-white p-4 rounded-2xl border border-cream-200 shadow-card">
+                            <div class="w-10 h-10 rounded-xl bg-terracotta-50 text-terracotta-500 flex items-center justify-center text-lg flex-shrink-0">
+                                <i class="fa-solid fa-leaf"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-warmdark">Suasana Asri</h4>
+                                <p class="text-xs text-softtext mt-1">Dikelilingi tanaman hijau & udara segar alami.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3 bg-white p-4 rounded-2xl border border-cream-200 shadow-card">
+                            <div class="w-10 h-10 rounded-xl bg-sage-100 text-sage-600 flex items-center justify-center text-lg flex-shrink-0">
+                                <i class="fa-solid fa-utensils"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-warmdark">Resep Otentik</h4>
+                                <p class="text-xs text-softtext mt-1">Bumbu dan kuah olahan khas rumahan yang gurih.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU SECTION WITH FILTER TABS -->
+    <section id="menu" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-2xl mx-auto mb-10 space-y-3">
+                <span class="text-xs uppercase font-extrabold text-terracotta-500 tracking-widest block">Menu Sajian</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold font-serif text-warmdark">Pilih Menu Favorit Anda</h2>
+                <p class="text-softtext text-sm">Semua sajian dibuat dari bahan-bahan segar setiap hari.</p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex justify-center mb-10">
+                <div class="inline-flex p-1.5 bg-cream-200/70 rounded-2xl border border-cream-300 gap-2 flex-wrap justify-center">
+                    <button onclick="filterMenu('all')" class="menu-tab-btn active px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition bg-terracotta-500 text-white shadow-soft" data-category="all">Semua Menu</button>
+                    <button onclick="filterMenu('makanan')" class="menu-tab-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-warmdark hover:text-terracotta-500" data-category="makanan">🍜 Makanan Utama</button>
+                    <button onclick="filterMenu('minuman')" class="menu-tab-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-warmdark hover:text-terracotta-500" data-category="minuman">🍹 Minuman Segar</button>
+                </div>
+            </div>
+
+            <!-- Menu Cards Grid -->
+            <div id="menu-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Javascript will populate soft cards here -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ADVANTAGES / FACILITIES SECTION -->
+    <section id="fasilitas" class="py-20 bg-cream-100/60 border-t border-cream-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                <span class="text-xs uppercase font-extrabold text-terracotta-500 tracking-widest block">Kenyamanan Anda</span>
+                <h2 class="text-3xl font-extrabold font-serif text-warmdark">Fasilitas Teras Kuliner</h2>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-6">
+                <!-- Item 1 -->
+                <div class="bg-white p-6 rounded-3xl border border-cream-200 shadow-card text-center hover:-translate-y-1 transition duration-300">
+                    <div class="w-14 h-14 rounded-2xl bg-terracotta-50 text-terracotta-500 mx-auto flex items-center justify-center text-2xl mb-4">
+                        <i class="fa-solid fa-couch"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-warmdark mb-2">Tempat Santai Nyaman</h3>
+                    <p class="text-softtext text-xs leading-relaxed">Tersedia area tempat duduk meja & lesehan santai bernuansa teras rumah.</p>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="bg-white p-6 rounded-3xl border border-cream-200 shadow-card text-center hover:-translate-y-1 transition duration-300">
+                    <div class="w-14 h-14 rounded-2xl bg-sage-100 text-sage-600 mx-auto flex items-center justify-center text-2xl mb-4">
+                        <i class="fa-solid fa-square-parking"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-warmdark mb-2">Parkir Luas & Aman</h3>
+                    <p class="text-softtext text-xs leading-relaxed">Area parkir kendaraan roda dua dan empat yang aman dan leluasa.</p>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="bg-white p-6 rounded-3xl border border-cream-200 shadow-card text-center hover:-translate-y-1 transition duration-300">
+                    <div class="w-14 h-14 rounded-2xl bg-peach-100 text-peach-500 mx-auto flex items-center justify-center text-2xl mb-4">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-warmdark mb-2">Harga Sangat Ramah</h3>
+                    <p class="text-softtext text-xs leading-relaxed">Rasa lezat harga terjangkau pas untuk kantong semua keluarga.</p>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="bg-white p-6 rounded-3xl border border-cream-200 shadow-card text-center hover:-translate-y-1 transition duration-300">
+                    <div class="w-14 h-14 rounded-2xl bg-cream-200 text-terracotta-600 mx-auto flex items-center justify-center text-2xl mb-4">
+                        <i class="fa-solid fa-wifi"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-warmdark mb-2">Wi-Fi Gratis</h3>
+                    <p class="text-softtext text-xs leading-relaxed">Makan sambil kerja santai atau nugas dengan koneksi Wi-Fi lancar.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- LOCATION & CONTACT SECTION -->
+    <section id="lokasi" class="py-20 bg-white border-t border-cream-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Contact & Info -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <span class="text-xs uppercase font-extrabold text-terracotta-500 tracking-widest block mb-1">Mampir Langsung</span>
+                        <h2 class="text-3xl font-extrabold font-serif text-warmdark">Lokasi & Jam Buka</h2>
+                        <p class="text-softtext text-sm mt-2">Kami siap melayani Anda setiap hari dengan kehangatan khas Teras Kuliner.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4 p-4 rounded-2xl bg-cream-50 border border-cream-200">
+                            <div class="w-10 h-10 rounded-xl bg-terracotta-500 text-white flex items-center justify-center text-lg flex-shrink-0 shadow-sm">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-warmdark">Alamat Kedai Teras</h4>
+                                <p class="text-softtext text-xs mt-0.5 leading-relaxed">Jl. Kebun Raya No. 12, Samping Taman Kota, Indonesia</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 p-4 rounded-2xl bg-cream-50 border border-cream-200">
+                            <div class="w-10 h-10 rounded-xl bg-sage-500 text-white flex items-center justify-center text-lg flex-shrink-0 shadow-sm">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-warmdark">Jam Operasional</h4>
+                                <p class="text-softtext text-xs mt-0.5">Senin - Minggu: 10.00 - 21.30 WIB</p>
+                                <span class="inline-block mt-1 text-[11px] font-bold text-sage-600 bg-sage-100 px-2.5 py-0.5 rounded-md">Buka Setiap Hari</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 p-4 rounded-2xl bg-cream-50 border border-cream-200">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-lg flex-shrink-0 shadow-sm">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-warmdark">WhatsApp Pesanan</h4>
+                                <p class="text-softtext text-xs mt-0.5">+62 812-3456-7890</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/6281234567890?text=Halo%20Teras%20Kuliner,%20saya%20mau%20pesan" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-2xl text-center text-sm transition shadow-soft flex items-center justify-center space-x-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Pesan via WhatsApp Sekarang</span>
+                    </a>
+                </div>
+
+                <!-- Google Maps Frame -->
+                <div class="lg:col-span-7">
+                    <div class="rounded-3xl overflow-hidden border border-cream-300 shadow-card h-[380px] relative bg-cream-100">
+                        <iframe title="Lokasi Teras Kuliner" class="w-full h-full border-0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521260322283!2d106.81956135000001!3d-6.194741399999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5390917b759%3A0x6b45e6732917058!2sGrand%20Indonesia!5e0!3m2!1sid!2sid!4v1620000000000!5m2!1sid!2sid" loading="lazy"></iframe>
+                        <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-cream-200 text-xs text-softtext flex justify-between items-center shadow-card">
+                            <span class="font-semibold">📍 Klik untuk rute lokasi langsung</span>
+                            <a href="https://maps.google.com" target="_blank" class="text-terracotta-500 font-bold hover:underline">Petunjuk Maps →</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-cream-100 border-t border-cream-200 text-softtext text-sm py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 rounded-xl bg-terracotta-500 text-white font-bold flex items-center justify-center text-sm">TK</div>
+                        <span class="text-xl font-bold font-serif text-warmdark">Teras Kuliner</span>
+                    </div>
+                    <p class="text-xs text-softtext leading-relaxed">Restoran berkonsep teras rumah asri dengan sajian Bakso, Mie Ayam, & Minuman Segar nikmat.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-warmdark font-bold mb-3 text-xs uppercase tracking-wider">Navigasi Halaman</h4>
+                    <ul class="space-y-2 text-xs font-medium">
+                        <li><a href="#beranda" class="hover:text-terracotta-500 transition">Beranda</a></li>
+                        <li><a href="#tentang" class="hover:text-terracotta-500 transition">Tentang Kami</a></li>
+                        <li><a href="#menu" class="hover:text-terracotta-500 transition">Daftar Menu</a></li>
+                        <li><a href="#lokasi" class="hover:text-terracotta-500 transition">Lokasi & Kontak</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-warmdark font-bold mb-3 text-xs uppercase tracking-wider">Menu Favorit</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><span class="text-softtext">Bakso Kuah Daging</span></li>
+                        <li><span class="text-softtext">Mie Ayam Komplit</span></li>
+                        <li><span class="text-softtext">Bakso Bakar Bumbu Pedas</span></li>
+                        <li><span class="text-softtext">Es Buah & Es Teh Jumbo</span></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-warmdark font-bold mb-3 text-xs uppercase tracking-wider">Sosial Media</h4>
+                    <div class="flex space-x-3 text-base">
+                        <a href="#" class="w-9 h-9 rounded-xl bg-white border border-cream-200 text-terracotta-500 hover:bg-terracotta-500 hover:text-white flex items-center justify-center transition shadow-sm"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-xl bg-white border border-cream-200 text-terracotta-500 hover:bg-terracotta-500 hover:text-white flex items-center justify-center transition shadow-sm"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-xl bg-white border border-cream-200 text-terracotta-500 hover:bg-terracotta-500 hover:text-white flex items-center justify-center transition shadow-sm"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-8 border-t border-cream-200 text-center text-xs text-softtext flex flex-col sm:flex-row items-center justify-between gap-4 font-medium">
+                <p>&copy; 2026 Teras Kuliner. Seluruh hak cipta dilindungi.</p>
+                <p class="text-terracotta-500 font-semibold">Disajikan hangat dari teras rumah 🏡</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING CART & CALCULATOR MODAL -->
+    <div id="cart-modal" class="fixed inset-0 z-50 bg-warmdark/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-3xl border border-cream-200 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            
+            <!-- Modal Header -->
+            <div class="p-5 bg-cream-100 border-b border-cream-200 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-xl bg-terracotta-500 text-white flex items-center justify-center">
+                        <i class="fa-solid fa-basket-shopping text-sm"></i>
+                    </div>
+                    <h3 class="text-lg font-bold font-serif text-warmdark">Keranjang Pesanan Teras</h3>
+                </div>
+                <button onclick="toggleCartModal()" class="text-softtext hover:text-warmdark text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content - Items List -->
+            <div class="p-5 overflow-y-auto custom-scrollbar flex-1 space-y-3" id="cart-items-container">
+                <!-- Javascript will insert cart items -->
+            </div>
+
+            <!-- Modal Footer Form -->
+            <div class="p-5 bg-cream-50 border-t border-cream-200 space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-warmdark mb-1">Nama Pemesan:</label>
+                    <input type="text" id="customer-name" placeholder="Masukkan nama Anda..." class="w-full bg-white border border-cream-300 rounded-xl px-3.5 py-2 text-sm text-warmdark focus:outline-none focus:border-terracotta-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-warmdark mb-1">Catatan Pesanan / Meja / Alamat:</label>
+                    <input type="text" id="customer-notes" placeholder="Contoh: Makan di tempat (Meja 3) / Pedas manis" class="w-full bg-white border border-cream-300 rounded-xl px-3.5 py-2 text-sm text-warmdark focus:outline-none focus:border-terracotta-500">
+                </div>
+
+                <div class="pt-2 border-t border-cream-200 flex justify-between items-center text-base font-bold">
+                    <span class="text-warmdark">Total Pembayaran:</span>
+                    <span id="cart-total-price" class="text-lg text-terracotta-500">Rp 0</span>
+                </div>
+
+                <button onclick="submitOrderToWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl transition shadow-soft flex items-center justify-center space-x-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Kirim Pesanan Ke WhatsApp</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // MENU DATA
+        const menuData = [
+            {
+                id: 1,
+                name: "Bakso Kuah Spesial",
+                category: "makanan",
+                price: 18000,
+                tag: "Favorit",
+                badgeBg: "bg-terracotta-500",
+                desc: "Bakso daging sapi asli komplit dengan mie, bihun, & kuah kaldu hangat gurih.",
+                image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 2,
+                name: "Mie Ayam Komplit",
+                category: "makanan",
+                price: 16000,
+                tag: "Rekomendasi",
+                badgeBg: "bg-peach-500",
+                desc: "Mie kenyal dengan potongan daging ayam kecap lezat, bakso, & kerupuk pangsit.",
+                image: "https://images.unsplash.com/photo-1612927601601-6638404737ce?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 3,
+                name: "Bakso Bakar Pedas Manis",
+                category: "makanan",
+                price: 15000,
+                tag: "Best Seller",
+                badgeBg: "bg-terracotta-500",
+                desc: "Bakso bakar (4 tusuk) dengan olesan bumbu racikan rahasia manis pedas harum.",
+                image: "https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 4,
+                name: "Bakso Goreng Krispi",
+                category: "makanan",
+                price: 12000,
+                tag: "Camilan",
+                badgeBg: "bg-sage-600",
+                desc: "Bakso goreng renyah di luar lembut di dalam disajikan bersama saus cocolan.",
+                image: "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 5,
+                name: "Es Buah Spesial Teras",
+                category: "minuman",
+                price: 12000,
+                tag: "Segar Banget",
+                badgeBg: "bg-sage-600",
+                desc: "Campuran alpukat, nangka, kelapa muda, jelly dengan sirup manis & susu segar.",
+                image: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 6,
+                name: "Pop Ice Blender Toping",
+                category: "minuman",
+                price: 6000,
+                tag: "Favorit Anak",
+                badgeBg: "bg-peach-500",
+                desc: "Minuman Pop Ice blender dingin lembut dengan aneka pilihan rasa & toping.",
+                image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 7,
+                name: "Kukubima Susu (Kusu)",
+                category: "minuman",
+                price: 8000,
+                tag: "Penyemangat",
+                badgeBg: "bg-terracotta-500",
+                desc: "Kukubima energi dipadukan susu kental manis dingin pas menambah stamina.",
+                image: "https://images.unsplash.com/photo-1541658016709-82535e94bc69?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 8,
+                name: "Extrajoss Susu (Jossu)",
+                category: "minuman",
+                price: 8000,
+                tag: "Segar Energi",
+                badgeBg: "bg-terracotta-500",
+                desc: "Kombinasi Extrajoss & susu manis dingin penyegar setelah beraktivitas.",
+                image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 9,
+                name: "Es Teh Manis Jumbo",
+                category: "minuman",
+                price: 5000,
+                tag: "Segar Klasik",
+                badgeBg: "bg-sage-600",
+                desc: "Es teh seduh alami dingin dengan gula asli gelas jumbo pendamping makan.",
+                image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"
+            }
+        ];
+
+        let cart = [];
+
+        // RENDER MENU ITEMS
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMenu('all');
+            initMobileMenu();
+        });
+
+        function renderMenu(filterCategory = 'all') {
+            const grid = document.getElementById('menu-grid');
+            grid.innerHTML = '';
+
+            const items = filterCategory === 'all' 
+                ? menuData 
+                : menuData.filter(i => i.category === filterCategory);
+
+            items.forEach(item => {
+                const formattedPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(item.price);
+                
+                const card = `
+                    <div class="bg-white rounded-3xl border border-cream-200 overflow-hidden shadow-card hover:shadow-soft transition duration-300 flex flex-col justify-between group">
+                        <div>
+                            <div class="relative h-48 overflow-hidden bg-cream-100">
+                                <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                <span class="absolute top-3 left-3 ${item.badgeBg} text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-sm">
+                                    ${item.tag}
+                                </span>
+                            </div>
+                            <div class="p-5">
+                                <h3 class="text-lg font-bold font-serif text-warmdark mb-1 group-hover:text-terracotta-500 transition">${item.name}</h3>
+                                <p class="text-softtext text-xs leading-relaxed">${item.desc}</p>
+                            </div>
+                        </div>
+
+                        <div class="px-5 pb-5 pt-3 border-t border-cream-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] text-softtext uppercase font-semibold block">Harga</span>
+                                <span class="text-lg font-extrabold text-terracotta-500">${formattedPrice}</span>
+                            </div>
+                            <button onclick="addToCart(${item.id})" class="bg-cream-100 hover:bg-terracotta-500 hover:text-white text-terracotta-600 font-bold px-4 py-2 rounded-xl text-xs transition flex items-center space-x-1.5 border border-cream-200">
+                                <i class="fa-solid fa-plus text-[10px]"></i>
+                                <span>Pesan</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        // FILTER TABS LOGIC
+        function filterMenu(cat) {
+            document.querySelectorAll('.menu-tab-btn').forEach(btn => {
+                if (btn.dataset.category === cat) {
+                    btn.classList.add('bg-terracotta-500', 'text-white', 'shadow-soft');
+                    btn.classList.remove('text-warmdark');
+                } else {
+                    btn.classList.remove('bg-terracotta-500', 'text-white', 'shadow-soft');
+                    btn.classList.add('text-warmdark');
+                }
+            });
+            renderMenu(cat);
+        }
+
+        // CART LOGIC
+        function addToCart(id) {
+            const item = menuData.find(m => m.id === id);
+            if (!item) return;
+
+            const existing = cart.find(c => c.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...item, qty: 1 });
+            }
+
+            updateCartUI();
+            showToast(`"${item.name}" ditambahkan ke keranjang!`);
+        }
+
+        function updateQty(id, delta) {
+            const idx = cart.findIndex(c => c.id === id);
+            if (idx !== -1) {
+                cart[idx].qty += delta;
+                if (cart[idx].qty <= 0) cart.splice(idx, 1);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            // Badges
+            const badge = document.getElementById('cart-count-badge');
+            const mobileCount = document.getElementById('mobile-cart-count');
+            
+            if (totalQty > 0) {
+                badge.innerText = totalQty;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+            mobileCount.innerText = totalQty;
+
+            // Total Price Display
+            document.getElementById('cart-total-price').innerText = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(totalPrice);
+
+            // Cart Items HTML
+            const container = document.getElementById('cart-items-container');
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-softtext">
+                        <i class="fa-solid fa-basket-shopping text-3xl mb-2 text-cream-300"></i>
+                        <p class="text-sm font-medium">Keranjang Anda masih kosong.</p>
+                        <p class="text-xs text-softtext mt-0.5">Pilih menu favorit di atas!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = cart.map(i => `
+                <div class="flex items-center justify-between p-3 bg-cream-50 rounded-2xl border border-cream-200">
+                    <div>
+                        <h4 class="text-xs font-bold text-warmdark">${i.name}</h4>
+                        <p class="text-xs text-terracotta-500 font-semibold mt-0.5">
+                            ${new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(i.price)}
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="updateQty(${i.id}, -1)" class="w-7 h-7 rounded-lg bg-cream-200 text-warmdark font-bold text-xs hover:bg-cream-300 transition">-</button>
+                        <span class="text-xs font-bold text-warmdark w-4 text-center">${i.qty}</span>
+                        <button onclick="updateQty(${i.id}, 1)" class="w-7 h-7 rounded-lg bg-terracotta-500 text-white font-bold text-xs hover:bg-terracotta-600 transition">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('hidden');
+            updateCartUI();
+        }
+
+        // WHATSAPP SUBMIT
+        function submitOrderToWhatsApp() {
+            if (cart.length === 0) {
+                alert("Keranjang pesanan Anda kosong!");
+                return;
+            }
+
+            const name = document.getElementById('customer-name').value.trim() || 'Pelanggan Teras';
+            const notes = document.getElementById('customer-notes').value.trim() || '-';
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const formattedTotal = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(totalPrice);
+
+            let msg = `Halo *Teras Kuliner*, saya mau pesan:\n\n`;
+            msg += `👤 *Nama:* ${name}\n`;
+            msg += `📋 *Rincian Pesanan:*\n`;
+
+            cart.forEach((item, index) => {
+                const subtotal = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(item.price * item.qty);
+                msg += `${index + 1}. ${item.name} x${item.qty} (${subtotal})\n`;
+            });
+
+            msg += `\n💰 *Total Pembayaran:* ${formattedTotal}\n`;
+            msg += `📝 *Catatan/Meja:* ${notes}\n\n`;
+            msg += `Mohon diproses ya. Terima kasih!`;
+
+            const waNumber = "6281234567890"; // Nomor WhatsApp Toko Anda
+            window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // MOBILE MENU NAV
+        function initMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                });
+            });
+        }
+
+        // TOAST NOTIFICATION
+        function showToast(text) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-5 right-5 z-50 bg-terracotta-500 text-white px-4 py-3 rounded-2xl shadow-soft text-xs font-bold flex items-center space-x-2 border border-terracotta-600 transition duration-300 transform translate-y-10 opacity-0';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-base"></i><span>${text}</span>`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-10', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-10', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
